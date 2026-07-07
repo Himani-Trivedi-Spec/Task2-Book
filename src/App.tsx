@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 import BookTable from './components/BookTable'
 import { books } from './data/Books';
 import type { Book } from './types/types.Book';
@@ -21,15 +21,14 @@ function App() {
     setBooksList(prevBookList => [...prevBookList, newBook])
   }, [])
 
-  const filterBooks = () => {
-    let result = booksList.filter(book => book.title.toLowerCase().includes(searchTerm.toLowerCase()))    
-    if(selectTerm === 'true' || selectTerm === 'false') {
+  const filterBooks = useMemo(() => {
+    let result = booksList.filter(book => book.title.toLowerCase().includes(searchTerm.toLowerCase()))
+    if (selectTerm === 'true' || selectTerm === 'false') {
       result = result.filter(book => book.isAvailable.toString() === selectTerm)
     }
-    console.log(result);
-  }
 
-  useEffect(filterBooks, [searchTerm, selectTerm])
+    return result
+  }, [searchTerm, selectTerm, booksList])
 
   return (<>
 
@@ -41,7 +40,7 @@ function App() {
     />
 
     <BookTable
-      books={booksList}
+      books={filterBooks}
       deleteBook={deleteBookById}
     />
 

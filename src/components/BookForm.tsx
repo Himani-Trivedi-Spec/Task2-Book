@@ -12,7 +12,7 @@ function BookForm({ addBook }: BookFormProps) {
             title: (form.elements.namedItem('title') as HTMLInputElement).value,
             author: (form.elements.namedItem('author') as HTMLInputElement).value,
             price: Number((form.elements.namedItem('price') as HTMLInputElement).value),
-            isAvailable: (form.elements.namedItem('isAvailable') as HTMLInputElement).value,
+            isAvailable: (form.elements.namedItem('isAvailable') as HTMLInputElement).value === 'true',
         }
         form.reset()
         addBook(newBook)
