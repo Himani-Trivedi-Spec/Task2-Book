@@ -1,14 +1,13 @@
-import type { BookTabelProps } from "./types.BookTableProps";
+import type { BookTabelProps } from "../types/types.BookTableProps.tsx";
 import React from "react";
-
 
 function BookTable({
     books,
-    deleteBook,
-}
+    deleteBook, }
     : BookTabelProps) {
 
     return (
+
         <div className="book-table">
             <table border={1}>
                 <thead>
