@@ -1,14 +1,24 @@
 import React from "react"
+import type { BookSearchAndFilterProps } from "../types/types.BookSearchAndFilterProps"
 
-function BookSearchAndFilter() {
+function BookSearchAndFilter({
+    searchTerm,
+    selectTerm,
+    setSearchTerm,
+    setSelectTerm
+}: BookSearchAndFilterProps) {
+
     return (
         <>
-            <input type="search" placeholder="Search book by title" />
+            <input type="search" placeholder="Search book by title" value={searchTerm}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchTerm(e.target.value)}
+            />
 
-            <select name="status">
+            <select name="status" value={selectTerm} onChange={
+                (e: React.ChangeEvent<HTMLSelectElement>) => setSelectTerm(e.target.value)}>
                 <option value="">Filter by status</option>
-                <option value='available'>Available</option>
-                <option value='unavailable'>Un - Available</option>
+                <option value='true'>Available</option>
+                <option value='false'>Un - Available</option>
             </select>
 
             <br /> <br />

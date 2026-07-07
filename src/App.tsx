@@ -8,6 +8,8 @@ import BookSearchAndFilter from './components/BookSearchAndFilter.tsx'
 function App() {
 
   const [booksList, setBooksList] = useState<Book[]>(books);
+  const [searchTerm, setSearchTerm] = useState<string>('');
+  const [selectTerm, setSelectTerm] = useState<string>('');
 
   const deleteBookById = useCallback((id: number) => {
     setBooksList(prevBookList =>
@@ -19,10 +21,24 @@ function App() {
     setBooksList(prevBookList => [...prevBookList, newBook])
   }, [])
 
+  const filterBooks = () => {
+    let result = booksList.filter(book => book.title.toLowerCase().includes(searchTerm.toLowerCase()))    
+    if(selectTerm === 'true' || selectTerm === 'false') {
+      result = result.filter(book => book.isAvailable.toString() === selectTerm)
+    }
+    console.log(result);
+  }
+
+  useEffect(filterBooks, [searchTerm, selectTerm])
+
   return (<>
 
-    <BookSearchAndFilter />
-
+    <BookSearchAndFilter
+      searchTerm={searchTerm}
+      selectTerm={selectTerm}
+      setSearchTerm={setSearchTerm}
+      setSelectTerm={setSelectTerm}
+    />
 
     <BookTable
       books={booksList}
