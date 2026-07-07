@@ -10,6 +10,7 @@ function App() {
   const [booksList, setBooksList] = useState<Book[]>(books);
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [selectTerm, setSelectTerm] = useState<string>('');
+  const [sum, setSum] = useState<number>(0)
 
   const deleteBookById = useCallback((id: number) => {
     setBooksList(prevBookList =>
@@ -26,6 +27,8 @@ function App() {
     if (selectTerm === 'true' || selectTerm === 'false') {
       result = result.filter(book => book.isAvailable.toString() === selectTerm)
     }
+
+    setSum(() => result.map(book => book.price).reduce((a: number,b : number) => a + b, 0))
 
     return result
   }, [searchTerm, selectTerm, booksList])
@@ -47,6 +50,8 @@ function App() {
     <BookForm
       addBook={addNewBook}
     />
+
+    <h2> Total salary : {sum}</h2>
   </>
   )
 }
